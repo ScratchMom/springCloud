@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.tx.dep.dao.DepDao">
+    <resultMap id="BaseResultMap" type="cn.tx.model.Dep">
+        <id column="deptno" property="deptno" jdbcType="INTEGER"/>
+        <result column="dname" property="dname" jdbcType="VARCHAR"/>
+        <result column="db_source" property="dbSource" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    deptno, dname, db_source
+  </sql>
+    <select id="findById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from cloudab01
+        where deptno = #{deptno,jdbcType=INTEGER}
+    </select>
+
+    <select id="findAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from cloudab01
+    </select>
+
+    <insert id="addDep" parameterType="cn.tx.model.Dep">
+      insert into cloudab01 (dname, db_source)
+      values (#{dname,jdbcType=VARCHAR}, #{dbSource,jdbcType=VARCHAR})
+    </insert>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cloudab01
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </delete>
+
+    <insert id="insertSelective" parameterType="cn.tx.model.Dep">
+        insert into cloudab01
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="deptno != null">
+                deptno,
+            </if>
+            <if test="dname != null">
+                dname,
+            </if>
+            <if test="dbSource != null">
+                db_source,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="deptno != null">
+                #{deptno,jdbcType=INTEGER},
+            </if>
+            <if test="dname != null">
+                #{dname,jdbcType=VARCHAR},
+            </if>
+            <if test="dbSource != null">
+                #{dbSource,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="cn.tx.model.Dep">
+        update cloudab01
+        <set>
+            <if test="dname != null">
+                dname = #{dname,jdbcType=VARCHAR},
+            </if>
+            <if test="dbSource != null">
+                db_source = #{dbSource,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where deptno = #{deptno,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="cn.tx.model.Dep">
+    update cloudab01
+    set dname = #{dname,jdbcType=VARCHAR},
+      db_source = #{dbSource,jdbcType=VARCHAR}
+    where deptno = #{deptno,jdbcType=INTEGER}
+  </update>
+</mapper>

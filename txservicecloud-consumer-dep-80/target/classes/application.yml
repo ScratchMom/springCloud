@@ -1,0 +1,9 @@
+server:
+  port: 8002
+spring:
+  application:
+    name: txservicecloud-consumer-dep    #当前微服务指定的名字
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:7001/eureka
